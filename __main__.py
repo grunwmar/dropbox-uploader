@@ -24,8 +24,8 @@ log.addHandler(consoleHandler)
 class DropboxUploader:
     """Simple class to easily upload directory to Dropbox."""
 
-    def __init__(self, remote_dir:str, db_token:str):
-        self._remote_dir = remote_dir
+    def __init__(self, target_dir:str, db_token:str):
+        self._target_dir = target_dir
 
         if db_token is not None:
             log.debug('Connecting to Dropbox...')
@@ -48,7 +48,7 @@ class DropboxUploader:
         try:
             with open(local_file, 'rb') as file:
                 try:
-                    remote_file = os.path.join(self._remote_dir, remote_file)
+                    remote_file = os.path.join(self._target_dir, remote_file)
                     self._dbx.files_upload(file.read(), remote_file, mode=WriteMode('overwrite'))
                 except Exception as exc2:
                     print(exc2)
@@ -63,7 +63,7 @@ def main(uploaded_dir_path:str):
 
     # access token to authorize in Dropbox is given through env. variable
     # var DB_ACCESS_TOKEN needs to be set, else ValueError is raised
-    with DropboxUploader(remote_dir="/PocketBook/Dropbox PocketBook",
+    with DropboxUploader(target_dir=os.environ.get('DB_TARGET_DIR'),
                          db_token=os.environ.get('DB_ACCESS_TOKEN')) as db:
 
         source_dir = os.path.normpath(uploaded_dir_path)
