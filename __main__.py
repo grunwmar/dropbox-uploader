@@ -7,7 +7,7 @@ from dropbox.files import WriteMode
 
 
 logFormatterTxt = logging.Formatter("%(asctime)s [%(levelname)-5.5s]  %(message)s")
-logFormatterConsole = logging.Formatter("%(asctime)s [\033[1;32m%(levelname)-5.5s\033[0m]  \033[1;33m%(message)s\033[0m")
+logFormatterConsole = logging.Formatter("%(asctime)s [\033[1;32m%(levelname)-5.5s\033[0m]  %(message)s")
 
 log = logging.getLogger()
 log.setLevel(logging.DEBUG)
